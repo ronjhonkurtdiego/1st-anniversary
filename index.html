@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, orientation=landscape">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title>Happy First Anniversary!</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
@@ -1530,6 +1532,24 @@
     </div>
 
     <script>
+        // Force landscape orientation on mobile
+        function requestLandscape() {
+            if (screen.orientation && screen.orientation.lock) {
+                screen.orientation.lock('landscape-primary').catch(err => {
+                    console.log('Orientation lock not supported:', err);
+                });
+            }
+        }
+
+        // Request on load
+        window.addEventListener('load', requestLandscape);
+        // Also request when page becomes visible
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                requestLandscape();
+            }
+        });
+
         const bookData = [
             {
                 title: "Happy 1st Anniversary",
