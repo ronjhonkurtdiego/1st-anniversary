@@ -1151,7 +1151,7 @@
 
         @media (max-width: 480px) {
             .flipbook-container {
-                aspect-ratio: 9 / 16;
+                aspect-ratio: 16 / 9;
                 margin: 0 10px;
                 width: 95vw;
             }
@@ -1161,39 +1161,49 @@
             }
 
             .pages-container {
-                flex-wrap: wrap;
+                flex-direction: row;
             }
 
             .page {
-                width: 100% !important;
+                width: 50% !important;
                 padding: 25px 18px 50px 18px;
                 height: 100%;
             }
 
             .page-title {
-                font-size: 1.4em;
+                font-size: 1.2em;
                 margin-bottom: 15px;
             }
 
             .page-text {
-                font-size: 0.95em;
-                line-height: 2;
+                font-size: 0.9em;
+                line-height: 1.9;
             }
 
             .cover-title {
-                font-size: 2em;
+                font-size: 1.8em;
             }
 
             .cover-subtitle {
-                font-size: 0.95em;
+                font-size: 0.9em;
             }
 
             .page-image {
-                max-height: 300px;
+                max-height: 250px;
+            }
+
+            .images-container {
+                flex-direction: column;
+                gap: 10px;
             }
 
             .images-container .page-image {
-                max-height: 200px;
+                max-height: 180px;
+            }
+
+            .images-container .image-frame {
+                width: 100%;
+                flex: 1;
             }
 
             .arrow-btn {
