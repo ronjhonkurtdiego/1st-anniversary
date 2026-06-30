@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="theme-color" content="#1a1a1a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <title>Happy First Anniversary!</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
@@ -16,7 +18,6 @@
         html, body {
             width: 100%;
             height: 100%;
-            overflow: hidden;
         }
 
         body {
@@ -28,7 +29,7 @@
             perspective: 1200px;
             min-height: 100vh;
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         #backgroundVideo {
@@ -49,6 +50,7 @@
             justify-content: center;
             align-items: center;
             padding: 30px 20px;
+            overflow: hidden;
         }
 
         .viewport::before {
@@ -579,9 +581,43 @@
             flex: 0 1 calc(50% - 7.5px);
         }
 
-        .images-container .page-image {
+        .images-container:not(.images-single) .page-image {
             max-height: 250px;
             width: 100%;
+        }
+
+        /* Single full-bleed image (e.g. ann.jpg) */
+        .images-single {
+            margin: 0;
+            padding: 0;
+            flex-direction: column;
+            height: calc(100% - 20px);
+        }
+
+        .images-single .image-frame {
+            width: 100%;
+            flex: 1 1 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-image-full {
+            max-height: 100%;
+            max-width: 100%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        /* Mobile override for full image */
+        html.ml .images-single {
+            height: calc(100% - 10px);
+        }
+
+        html.ml .page-image-full {
+            max-height: calc(var(--mlh, 390px) * 0.75);
         }
 
         /* REALISTIC PAGE CURL AND BEND ANIMATIONS */
@@ -973,7 +1009,7 @@
         }
 
         .heart-float {
-            position: fixed;
+            position: absolute;
             pointer-events: none;
             user-select: none;
             font-size: 2.5em;
@@ -1068,123 +1104,240 @@
         }
 
         /* RESPONSIVE */
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .flipbook-container {
-                max-width: 95vw;
-                aspect-ratio: 10 / 14;
-                margin: 0 40px;
+                max-width: 98vw;
+                aspect-ratio: 16 / 10;
+                margin: 0 30px;
             }
 
             .side-panel {
-                width: 70px;
-                padding: 30px 15px;
+                width: 50px;
+                padding: 25px 10px;
             }
 
             .side-panel-left {
-                left: -90px;
+                left: -70px;
             }
 
             .side-panel-right {
-                right: -90px;
-            }
-
-            .floral-element {
-                font-size: 1.8em;
-            }
-
-            .corner-ornament {
-                font-size: 1.4em;
-            }
-
-            .page {
-                padding: 30px 30px 40px 30px;
-            }
-
-            .cover-title {
-                font-size: 2.2em;
-            }
-
-            .cover-subtitle {
-                font-size: 1em;
-            }
-
-            .page-title {
-                font-size: 1.6em;
-                margin-bottom: 20px;
-            }
-
-            .page-text {
-                font-size: 0.9em;
-                line-height: 2.1;
-                text-align: left;
-            }
-
-            .controls {
-                bottom: 15px;
-                gap: 10px;
-            }
-
-            .btn {
-                padding: 11px 22px;
-                font-size: 0.85em;
-            }
-
-            .page-info {
-                padding: 10px 18px;
-                font-size: 0.85em;
-            }
-
-            .arrow-btn {
-                width: 45px;
-                height: 45px;
-                font-size: 24px;
+                right: -70px;
             }
 
             .arrow-left {
-                left: -60px;
+                left: -50px;
             }
 
             .arrow-right {
-                right: -60px;
+                right: -50px;
             }
         }
 
-        @media (max-width: 480px) {
-            .flipbook-container {
-                aspect-ratio: 1 / 1.4;
-                margin: 0 20px;
-            }
+        /* ─── MOBILE: rotate portrait → landscape ─────────────────── */
 
-            .side-panel {
-                display: none;
-            }
-
-            .page {
-                padding: 30px 20px;
-            }
-
-            .page-title {
-                font-size: 1.2em;
-            }
-
-            .page-text {
-                font-size: 0.85em;
-                line-height: 1.8;
-            }
-
-            .cover-title {
-                font-size: 1.8em;
-            }
+        #rotateWrapper {
+            width: 100%;
+            height: 100%;
         }
+
+        html.mobile-portrait,
+        html.mobile-portrait body {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+        }
+
+        /*
+         * html.ml = mobile landscape (physically landscape OR CSS-rotated).
+         * --mlw = effective landscape width (long side, e.g. 844px)
+         * --mlh = effective landscape height (short side, e.g. 390px)
+         * All sizing uses these vars so everything scales to the actual screen.
+         */
+
+        html.ml body {
+            width:  var(--mlw, 100%);
+            height: var(--mlh, 100%);
+            overflow: hidden;
+            perspective: none;
+        }
+
+        html.ml #rotateWrapper {
+            width:  var(--mlw, 100%);
+            height: var(--mlh, 100%);
+            position: relative;
+        }
+
+        /* Full-screen viewport */
+        html.ml .viewport {
+            width:  var(--mlw, 100%);
+            height: var(--mlh, 100%);
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        html.ml .viewport::before { display: none; }
+
+        /* Hide chrome */
+        html.ml .side-panel,
+        html.ml .book-spine,
+        html.ml .bookmark { display: none; }
+
+        /* Book container: exact pixel height, aspect ratio gives width */
+        html.ml .flipbook-container {
+            height: calc(var(--mlh, 390px) * 0.88);
+            width:  calc(var(--mlh, 390px) * 0.88 * 1.6);
+            max-width: calc(var(--mlw, 844px) - var(--mlh, 390px) * 0.14);
+            aspect-ratio: unset;
+            margin: 0;
+            perspective: 3000px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        /* Flipbook fills container exactly */
+        html.ml .flipbook {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Pages side-by-side, each 50% */
+        html.ml .pages-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+        }
+        html.ml .page {
+            width: 50%;
+            height: 100%;
+            padding: calc(var(--mlh, 390px) * 0.018)
+                     calc(var(--mlh, 390px) * 0.022)
+                     calc(var(--mlh, 390px) * 0.055)
+                     calc(var(--mlh, 390px) * 0.022);
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+        html.ml .page.cover {
+            width: 50%;
+            height: 100%;
+            padding: calc(var(--mlh, 390px) * 0.03)
+                     calc(var(--mlh, 390px) * 0.022)
+                     calc(var(--mlh, 390px) * 0.04)
+                     calc(var(--mlh, 390px) * 0.022);
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Arrows */
+        html.ml .arrow-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width:  calc(var(--mlh, 390px) * 0.1);
+            height: calc(var(--mlh, 390px) * 0.1);
+            font-size: calc(var(--mlh, 390px) * 0.048);
+        }
+        html.ml .arrow-left  { left:  calc(var(--mlh, 390px) * -0.11); }
+        html.ml .arrow-right { right: calc(var(--mlh, 390px) * -0.11); }
+
+        /* Page content */
+        html.ml .page-content { padding: 0 calc(var(--mlh, 390px) * 0.01); }
+
+        /* Typography — sized to landscape height */
+        html.ml .page-title {
+            font-size:     calc(var(--mlh, 390px) * 0.038);
+            margin-bottom: calc(var(--mlh, 390px) * 0.008);
+            padding:       calc(var(--mlh, 390px) * 0.005) 0;
+        }
+        html.ml .page-text {
+            font-size:   calc(var(--mlh, 390px) * 0.026);
+            line-height: 1.4;
+        }
+        html.ml .page-text::first-letter {
+            font-size: 1.2em;
+            margin-right: 1px;
+            margin-top: 0;
+        }
+        html.ml .page-number {
+            font-size: calc(var(--mlh, 390px) * 0.028);
+            bottom:    calc(var(--mlh, 390px) * 0.022);
+        }
+        html.ml .page-left  .page-number { left:  calc(var(--mlh, 390px) * 0.04); }
+        html.ml .page-right .page-number { right: calc(var(--mlh, 390px) * 0.04); }
+
+        /* Cover typography */
+        html.ml .cover-title {
+            font-size:     calc(var(--mlh, 390px) * 0.115);
+            margin-bottom: calc(var(--mlh, 390px) * 0.025);
+        }
+        html.ml .cover-subtitle {
+            font-size: calc(var(--mlh, 390px) * 0.042);
+            letter-spacing: 1px;
+        }
+        html.ml .cover-author {
+            font-size:  calc(var(--mlh, 390px) * 0.036);
+            margin-top: calc(var(--mlh, 390px) * 0.04);
+            padding:    calc(var(--mlh, 390px) * 0.022) calc(var(--mlh, 390px) * 0.035);
+        }
+        html.ml .cover-decoration {
+            width:  calc(var(--mlh, 390px) * 0.18);
+            margin: calc(var(--mlh, 390px) * 0.025) 0;
+        }
+
+        /* Images */
+        html.ml .images-container {
+            gap:    calc(var(--mlh, 390px) * 0.018);
+            margin: calc(var(--mlh, 390px) * 0.015) 0;
+        }
+        html.ml .images-container:not(.images-single) .image-frame {
+            flex: 0 1 calc(50% - calc(var(--mlh, 390px) * 0.009));
+        }
+        html.ml .images-container:not(.images-single) .page-image,
+        html.ml .images-container:not(.images-single) video.page-image {
+            max-height:   calc(var(--mlh, 390px) * 0.32);
+            width:        100%;
+            border-width: calc(var(--mlh, 390px) * 0.012);
+        }
+
+        /* Controls bar */
+        html.ml .controls {
+            bottom: calc(var(--mlh, 390px) * 0.012);
+            gap:    calc(var(--mlh, 390px) * 0.018);
+        }
+        html.ml .btn {
+            padding:       calc(var(--mlh, 390px) * 0.018) calc(var(--mlh, 390px) * 0.038);
+            font-size:     calc(var(--mlh, 390px) * 0.03);
+            border-radius: calc(var(--mlh, 390px) * 0.06);
+        }
+        html.ml .page-info {
+            padding:       calc(var(--mlh, 390px) * 0.018) calc(var(--mlh, 390px) * 0.038);
+            font-size:     calc(var(--mlh, 390px) * 0.03);
+            min-width:     calc(var(--mlh, 390px) * 0.28);
+            border-radius: calc(var(--mlh, 390px) * 0.06);
+        }
+
+        /* Music player */
+        html.ml .music-player {
+            position:      absolute;  /* stay inside rotateWrapper, not fixed to portrait viewport */
+            top:           calc(var(--mlh, 390px) * 0.015);
+            right:         calc(var(--mlh, 390px) * 0.015);
+            padding:       calc(var(--mlh, 390px) * 0.012) calc(var(--mlh, 390px) * 0.022);
+            gap:           calc(var(--mlh, 390px) * 0.012);
+            border-radius: calc(var(--mlh, 390px) * 0.07);
+            z-index:       1000;
+        }
+        html.ml .music-btn {
+            width:     calc(var(--mlh, 390px) * 0.09);
+            height:    calc(var(--mlh, 390px) * 0.09);
+            font-size: calc(var(--mlh, 390px) * 0.05);
+        }
+        html.ml .music-info { display: none; }
     </style>
 
-    <!-- LIGHTBOX MODAL -->
-    <div class="lightbox" id="lightbox">
-        <div class="lightbox-content">
-            <img class="lightbox-image" id="lightboxImage" src="" alt="Expanded image">
-            <button class="lightbox-close" id="lightboxClose">✕</button>
-        </div>
-    </div>
+    <!-- LIGHTBOX MODAL (inside rotateWrapper so rotation applies) -->
 
     <style>
         /* LIGHTBOX STYLES */
@@ -1206,10 +1359,40 @@
             display: flex;
         }
 
+        /* On mobile (portrait rotated), the lightbox sits outside the wrapper
+           so it's in the real viewport. We counter-rotate its content so it
+           appears in landscape orientation matching the rest of the UI. */
+        html.mobile-portrait .lightbox {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        html.mobile-portrait .lightbox-content {
+            /* rotate content 90° CW to match the wrapper rotation */
+            transform: rotate(90deg);
+            max-width:  calc(100vh * 0.9);
+            max-height: calc(100vw * 0.88);
+        }
+
+        html.mobile-portrait .lightbox-image,
+        html.mobile-portrait .lightbox-video {
+            max-width:  calc(100vh * 0.88);
+            max-height: calc(100vw * 0.88);
+        }
+
+        html.mobile-portrait .lightbox-close {
+            /* keep close button accessible after rotation */
+            top: auto;
+            bottom: calc(100vw * -0.12);
+            right: 0;
+        }
+
         .lightbox-content {
             position: relative;
-            max-width: 90vw;
-            max-height: 90vh;
+            max-width: 90%;
+            max-height: 90%;
             animation: zoomInAnim 0.3s ease-out;
         }
 
@@ -1266,6 +1449,7 @@
     </style>
 </head>
 <body>
+    <div id="rotateWrapper">
     <video id="backgroundVideo" autoplay muted loop playsinline>
         <source src="background.mp4" type="video/mp4">
     </video>
@@ -1337,6 +1521,15 @@
                 <span style="font-size: 0.65em; color: #ffffff;">🔊</span>
                 <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="30">
             </div>
+        </div>
+    </div>
+    </div><!-- /#rotateWrapper -->
+
+    <!-- LIGHTBOX MODAL (outside wrapper, counter-rotated on mobile) -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <img class="lightbox-image" id="lightboxImage" src="" alt="Expanded image">
+            <button class="lightbox-close" id="lightboxClose">✕</button>
         </div>
     </div>
 
@@ -1464,13 +1657,14 @@
                 page.className = `page ${side} ${animClass}`;
                 let imagesHTML = '';
                 if (pageData.images && pageData.images.length > 0) {
-                    imagesHTML = `<div class="images-container">
+                    const isSingle = pageData.images.length === 1;
+                    imagesHTML = `<div class="images-container${isSingle ? ' images-single' : ''}">
                         ${pageData.images.map(item => {
                             const isVideo = /\.(mp4|webm|ogg)$/i.test(item);
                             if (isVideo) {
-                                return `<div class="image-frame"><video src="${item}" class="page-image" muted autoplay loop playsinline style="border: 8px solid #f5f3f0; border-radius: 8px; cursor: pointer;"></video></div>`;
+                                return `<div class="image-frame"><video src="${item}" class="page-image${isSingle ? ' page-image-full' : ''}" muted autoplay loop playsinline style="border: 8px solid #f5f3f0; border-radius: 8px; cursor: pointer;"></video></div>`;
                             } else {
-                                return `<div class="image-frame"><img src="${item}" class="page-image" alt="Page image"></div>`;
+                                return `<div class="image-frame"><img src="${item}" class="page-image${isSingle ? ' page-image-full' : ''}" alt="Page image"></div>`;
                             }
                         }).join('')}
                     </div>`;
@@ -1593,17 +1787,23 @@
         function createHearts() {
             const heartCount = 8;
             const hearts = ['❤️', '💕', '💖'];
-            
+            // Append hearts inside the wrapper so they follow the rotation.
+            // Use landscape dimensions (--mlw/--mlh) when on mobile.
+            const container = wrapper || document.body;
+            const W = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--mlw')) || window.innerWidth;
+            const H = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--mlh')) || window.innerHeight;
+
             for (let i = 0; i < heartCount; i++) {
                 setTimeout(() => {
                     const heart = document.createElement('div');
                     heart.className = 'heart-float';
                     heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-                    heart.style.left = Math.random() * window.innerWidth + 'px';
-                    heart.style.top = window.innerHeight + 'px';
+                    heart.style.left = Math.random() * W + 'px';
+                    heart.style.top = H + 'px';
                     heart.style.setProperty('--tx', (Math.random() - 0.5) * 200 + 'px');
-                    document.body.appendChild(heart);
-                    
+                    // Keep hearts inside the container so they rotate with it
+                    heart.style.position = 'absolute';
+                    container.appendChild(heart);
                     setTimeout(() => heart.remove(), 3000);
                 }, i * 100);
             }
@@ -1644,23 +1844,34 @@
         }
 
         // TOUCH SWIPE
-        let touchStart = 0;
-        let touchEnd = 0;
+        let touchStartX = 0, touchStartY = 0;
+        let touchEndX   = 0, touchEndY   = 0;
 
         document.addEventListener('touchstart', e => {
-            touchStart = e.changedTouches[0].clientX;
+            touchStartX = e.changedTouches[0].clientX;
+            touchStartY = e.changedTouches[0].clientY;
         });
 
         document.addEventListener('touchend', e => {
-            touchEnd = e.changedTouches[0].clientX;
+            touchEndX = e.changedTouches[0].clientX;
+            touchEndY = e.changedTouches[0].clientY;
             handleSwipe();
         });
 
         function handleSwipe() {
-            const diff = touchEnd - touchStart;
-            if (Math.abs(diff) > 50) {
-                if (diff > 0) previousPage();
-                else nextPage();
+            const dx = touchEndX - touchStartX;
+            const dy = touchEndY - touchStartY;
+            // Use whichever axis has the bigger delta
+            const isRotated = wrapper.style.transform && wrapper.style.transform.includes('rotate');
+            if (isRotated) {
+                // After 90° rotation, vertical swipe acts as horizontal navigation
+                if (Math.abs(dy) > 50 && Math.abs(dy) > Math.abs(dx)) {
+                    if (dy < 0) nextPage(); else previousPage();
+                }
+            } else {
+                if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+                    if (dx < 0) nextPage(); else previousPage();
+                }
             }
         }
 
@@ -1721,6 +1932,56 @@
 
         // Initialize
         renderPages();
+
+        // ── Portrait-to-landscape rotation ──────────────────────────────
+        const wrapper = document.getElementById('rotateWrapper');
+        const htmlEl  = document.documentElement;
+
+        function applyRotation() {
+            const W = window.innerWidth;
+            const H = window.innerHeight;
+            const isMobile = Math.max(W, H) <= 1024;
+
+            if (!isMobile) {
+                wrapper.style.cssText = '';
+                htmlEl.classList.remove('ml', 'mobile-portrait');
+                htmlEl.style.removeProperty('--mlh');
+                htmlEl.style.removeProperty('--mlw');
+                return;
+            }
+
+            // --mlh = effective landscape height (short side)
+            // --mlw = effective landscape width  (long side)
+            const landscapeH = Math.min(W, H);
+            const landscapeW = Math.max(W, H);
+            htmlEl.style.setProperty('--mlh', landscapeH + 'px');
+            htmlEl.style.setProperty('--mlw', landscapeW + 'px');
+            htmlEl.classList.add('ml');
+
+            if (H > W) {
+                // Portrait → rotate 90° CW so it appears landscape
+                // transform-origin: top left + rotate(90deg) + translateY(-W)
+                // places the element correctly at screen origin filling H×W visually.
+                wrapper.style.position        = 'fixed';
+                wrapper.style.top             = '0';
+                wrapper.style.left            = '0';
+                wrapper.style.width           = H + 'px';
+                wrapper.style.height          = W + 'px';
+                wrapper.style.transformOrigin = 'top left';
+                wrapper.style.transform       = `rotate(90deg) translateY(-${W}px)`;
+                wrapper.style.overflow        = 'hidden';
+                htmlEl.classList.add('mobile-portrait');
+            } else {
+                // Already landscape — no rotation needed
+                wrapper.style.cssText = '';
+                htmlEl.classList.remove('mobile-portrait');
+            }
+        }
+
+        applyRotation();
+        window.addEventListener('resize', applyRotation);
+        window.addEventListener('orientationchange', () => setTimeout(applyRotation, 200));
+        // ────────────────────────────────────────────────────────────────
 
         // Lightbox event listeners
         document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
