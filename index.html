@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="theme-color" content="#1a1a1a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <title>Happy First Anniversary!</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
@@ -16,7 +18,6 @@
         html, body {
             width: 100%;
             height: 100%;
-            overflow: hidden;
         }
 
         body {
@@ -28,7 +29,7 @@
             perspective: 1200px;
             min-height: 100vh;
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         #backgroundVideo {
@@ -49,6 +50,7 @@
             justify-content: center;
             align-items: center;
             padding: 30px 20px;
+            overflow: hidden;
         }
 
         .viewport::before {
@@ -1068,112 +1070,436 @@
         }
 
         /* RESPONSIVE */
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .flipbook-container {
-                max-width: 95vw;
-                aspect-ratio: 10 / 14;
-                margin: 0 40px;
+                max-width: 98vw;
+                aspect-ratio: 16 / 10;
+                margin: 0 30px;
             }
 
             .side-panel {
-                width: 70px;
-                padding: 30px 15px;
+                width: 50px;
+                padding: 25px 10px;
             }
 
             .side-panel-left {
-                left: -90px;
+                left: -70px;
             }
 
             .side-panel-right {
-                right: -90px;
-            }
-
-            .floral-element {
-                font-size: 1.8em;
-            }
-
-            .corner-ornament {
-                font-size: 1.4em;
-            }
-
-            .page {
-                padding: 30px 30px 40px 30px;
-            }
-
-            .cover-title {
-                font-size: 2.2em;
-            }
-
-            .cover-subtitle {
-                font-size: 1em;
-            }
-
-            .page-title {
-                font-size: 1.6em;
-                margin-bottom: 20px;
-            }
-
-            .page-text {
-                font-size: 0.9em;
-                line-height: 2.1;
-                text-align: left;
-            }
-
-            .controls {
-                bottom: 15px;
-                gap: 10px;
-            }
-
-            .btn {
-                padding: 11px 22px;
-                font-size: 0.85em;
-            }
-
-            .page-info {
-                padding: 10px 18px;
-                font-size: 0.85em;
-            }
-
-            .arrow-btn {
-                width: 45px;
-                height: 45px;
-                font-size: 24px;
+                right: -70px;
             }
 
             .arrow-left {
-                left: -60px;
+                left: -50px;
             }
 
             .arrow-right {
-                right: -60px;
+                right: -50px;
             }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 768px) {
+            .viewport {
+                padding: 15px 0;
+            }
+
             .flipbook-container {
-                aspect-ratio: 1 / 1.4;
+                max-width: 95vw;
+                width: 95vw;
+                aspect-ratio: 16 / 10;
                 margin: 0 20px;
             }
 
             .side-panel {
-                display: none;
+                width: 40px;
+                padding: 20px 8px;
+            }
+
+            .side-panel-left {
+                left: -55px;
+            }
+
+            .side-panel-right {
+                right: -55px;
+            }
+
+            .floral-element {
+                font-size: 1.4em;
+            }
+
+            .corner-ornament {
+                font-size: 1em;
+            }
+
+            .arrow-left {
+                left: -45px;
+                width: 38px;
+                height: 38px;
+                font-size: 20px;
+            }
+
+            .arrow-right {
+                right: -45px;
+                width: 38px;
+                height: 38px;
+                font-size: 20px;
             }
 
             .page {
-                padding: 30px 20px;
+                padding: 20px 15px 30px 15px;
             }
 
             .page-title {
                 font-size: 1.2em;
+                margin-bottom: 12px;
             }
 
             .page-text {
-                font-size: 0.85em;
-                line-height: 1.8;
+                font-size: 0.8em;
+                line-height: 1.7;
             }
 
             .cover-title {
-                font-size: 1.8em;
+                font-size: 1.6em;
+            }
+
+            .cover-subtitle {
+                font-size: 0.9em;
+            }
+
+            .cover-author {
+                font-size: 0.8em;
+            }
+
+            .controls {
+                bottom: 12px;
+                gap: 8px;
+            }
+
+            .btn {
+                padding: 10px 18px;
+                font-size: 0.8em;
+                min-height: 44px;
+            }
+
+            .page-info {
+                padding: 8px 14px;
+                font-size: 0.75em;
+                min-height: 44px;
+            }
+
+            .music-player {
+                top: 15px;
+                right: 15px;
+                gap: 10px;
+                padding: 8px 12px;
+            }
+
+            .music-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1em;
+            }
+
+            .music-info {
+                display: flex;
+            }
+
+            .music-title {
+                font-size: 0.65em;
+            }
+
+            .volume-slider {
+                width: 50px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .viewport {
+                padding: 10px 0;
+            }
+
+            .flipbook-container {
+                max-width: 98vw;
+                width: 98vw;
+                aspect-ratio: 16 / 10;
+                margin: 0 15px;
+            }
+
+            .side-panel {
+                width: 35px;
+                padding: 15px 6px;
+            }
+
+            .side-panel-left {
+                left: -50px;
+            }
+
+            .side-panel-right {
+                right: -50px;
+            }
+
+            .floral-element {
+                font-size: 1.2em;
+            }
+
+            .corner-ornament {
+                font-size: 0.9em;
+            }
+
+            .arrow-left {
+                left: -40px;
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+            }
+
+            .arrow-right {
+                right: -40px;
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+            }
+
+            .page {
+                padding: 15px 12px 25px 12px;
+            }
+
+            .page-title {
+                font-size: 1em;
+                margin-bottom: 10px;
+            }
+
+            .page-text {
+                font-size: 0.75em;
+                line-height: 1.6;
+            }
+
+            .cover-title {
+                font-size: 1.3em;
+            }
+
+            .cover-subtitle {
+                font-size: 0.8em;
+            }
+
+            .cover-author {
+                font-size: 0.75em;
+            }
+
+            .cover-decoration {
+                width: 50px;
+            }
+
+            .page-number {
+                font-size: 0.65em;
+            }
+
+            .controls {
+                bottom: 10px;
+                gap: 6px;
+            }
+
+            .btn {
+                padding: 8px 14px;
+                font-size: 0.7em;
+            }
+
+            .page-info {
+                padding: 6px 12px;
+                font-size: 0.7em;
+            }
+
+            .music-player {
+                top: 12px;
+                right: 12px;
+                padding: 6px 10px;
+                gap: 8px;
+            }
+
+            .music-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 1em;
+            }
+
+            .music-title {
+                font-size: 0.6em;
+            }
+
+            .volume-slider {
+                width: 45px;
+                height: 3px;
+            }
+
+            .images-container {
+                margin: 10px 0;
+            }
+
+            .image-frame {
+                border-width: 4px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .viewport {
+                padding: 8px 0;
+            }
+
+            .flipbook-container {
+                max-width: 100%;
+                width: 100%;
+                aspect-ratio: 16 / 10;
+                margin: 0 10px;
+            }
+
+            .side-panel {
+                width: 30px;
+                padding: 12px 4px;
+            }
+
+            .side-panel-left {
+                left: -40px;
+            }
+
+            .side-panel-right {
+                right: -40px;
+            }
+
+            .floral-element {
+                font-size: 1em;
+            }
+
+            .corner-ornament {
+                font-size: 0.8em;
+            }
+
+            .arrow-left {
+                left: -35px;
+                width: 32px;
+                height: 32px;
+                font-size: 16px;
+            }
+
+            .arrow-right {
+                right: -35px;
+                width: 32px;
+                height: 32px;
+                font-size: 16px;
+            }
+
+            .page {
+                padding: 12px 10px 20px 10px;
+            }
+
+            .page-title {
+                font-size: 0.9em;
+                margin-bottom: 8px;
+            }
+
+            .page-text {
+                font-size: 0.7em;
+                line-height: 1.5;
+            }
+
+            .cover-title {
+                font-size: 1.1em;
+            }
+
+            .cover-subtitle {
+                font-size: 0.75em;
+            }
+
+            .cover-author {
+                font-size: 0.7em;
+            }
+
+            .cover-decoration {
+                width: 40px;
+            }
+
+            .page-number {
+                font-size: 0.6em;
+                margin-top: 5px;
+            }
+
+            .controls {
+                bottom: 8px;
+                gap: 4px;
+            }
+
+            .btn {
+                padding: 7px 12px;
+                font-size: 0.65em;
+            }
+
+            .page-info {
+                padding: 5px 10px;
+                font-size: 0.65em;
+                min-width: 100px;
+            }
+
+            .music-player {
+                top: 10px;
+                right: 10px;
+                padding: 5px 8px;
+                gap: 6px;
+            }
+
+            .music-btn {
+                width: 34px;
+                height: 34px;
+                font-size: 0.9em;
+                min-width: auto;
+                min-height: auto;
+            }
+
+            .music-info {
+                display: none;
+            }
+
+            .volume-slider {
+                width: 40px;
+                height: 2px;
+            }
+
+            .images-container {
+                margin: 8px 0;
+            }
+
+            .image-frame {
+                border-width: 3px;
+            }
+        }
+
+        @media (max-height: 600px) and (orientation: landscape) {
+            .flipbook-container {
+                aspect-ratio: auto;
+                max-height: 90vh;
+            }
+
+            .viewport {
+                padding: 5px 0;
+            }
+
+            .page {
+                padding: 10px 10px 15px 10px;
+            }
+
+            .page-title {
+                font-size: 0.9em;
+                margin-bottom: 6px;
+            }
+
+            .page-text {
+                font-size: 0.7em;
+                line-height: 1.5;
+            }
+
+            .controls {
+                bottom: 5px;
+                gap: 4px;
             }
         }
     </style>
